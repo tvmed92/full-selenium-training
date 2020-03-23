@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.stqa'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+test {
+    useTestNG()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'org.testng:testng:7.1.0'
+    testCompile 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-5'
+}
