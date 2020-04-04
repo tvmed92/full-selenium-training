@@ -20,7 +20,6 @@ public class BaseTest {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(3, SECONDS);
         wait = new WebDriverWait(driver, ofSeconds(10));
-        login();
     }
 
     @AfterClass(alwaysRun = true)
@@ -29,11 +28,15 @@ public class BaseTest {
         driver = null;
     }
 
-    private void login() {
+    public void loginAsAdmin() {
         driver.get("http://localhost/litecart/admin/");
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("login")).click();
+        driver.findElement(By.name("loginAsAdmin")).click();
         wait.until(WebDriver::getTitle).equals("My Store");
+    }
+
+    public void openMainPage() {
+        driver.get("http://localhost/litecart/");
     }
 }
