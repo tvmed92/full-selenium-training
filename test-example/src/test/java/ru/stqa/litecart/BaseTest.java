@@ -19,6 +19,7 @@ public class BaseTest {
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(3, SECONDS);
+        driver.manage().window().maximize();
         wait = new WebDriverWait(driver, ofSeconds(10));
     }
 
@@ -32,7 +33,7 @@ public class BaseTest {
         driver.get("http://localhost/litecart/admin/");
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("loginAsAdmin")).click();
+        driver.findElement(By.name("login")).click();
         wait.until(WebDriver::getTitle).equals("My Store");
     }
 
