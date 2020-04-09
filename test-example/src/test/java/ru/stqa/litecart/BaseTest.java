@@ -1,5 +1,6 @@
 package ru.stqa.litecart;
 
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,7 +14,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class BaseTest {
 
     protected WebDriver driver;
-    protected WebDriverWait wait;
+    private WebDriverWait wait;
 
     @BeforeClass
     public void setUp() {
@@ -38,6 +39,22 @@ public class BaseTest {
     }
 
     public void openMainPage() {
-        driver.get("http://localhost/litecart/");
+        driver.get("http://localhost/litecart/en/");
+    }
+
+
+    protected String getText(String s) {
+        return driver.findElement(By.cssSelector(s)).getText();
+    }
+
+    @NotNull
+    protected Double getFontSize(String css) {
+        return Double.valueOf(driver.findElement(By.cssSelector(css))
+                .getCssValue("font-size").replace("px", ""));
+    }
+
+    protected String getAttributeValue(String css, String color) {
+        return driver.findElement(By.cssSelector(css))
+                .getCssValue(color);
     }
 }
