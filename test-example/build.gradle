@@ -18,4 +18,5 @@ repositories {
 dependencies {
     testCompile 'org.testng:testng:7.1.0'
     testCompile 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-5'
+    testCompile 'org.apache.commons:commons-lang3:3.10'
 }
