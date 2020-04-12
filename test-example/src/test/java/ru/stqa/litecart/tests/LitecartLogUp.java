@@ -2,7 +2,6 @@ package ru.stqa.litecart.tests;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 import ru.stqa.litecart.BaseTest;
 
@@ -24,7 +23,7 @@ public class LitecartLogUp extends BaseTest {
         fillField("city", alphabetic);
         selectFromDropdown(".content select[name='country_code']", "United States");
         fillField("email", email);
-        driver.findElement(By.name("phone")).sendKeys(Keys.HOME + "+134567890");
+        fillFieldFromHome("phone", "+134567890");
         fillField("password", password);
         fillField("confirmed_password", password);
         clickCreateAccountButton();
