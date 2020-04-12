@@ -1,5 +1,6 @@
 package ru.stqa.litecart.tests;
 
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -57,16 +58,20 @@ public class LitecartCustomersModeTest extends BaseTest {
     @Test(description = "Задание 10. Проверить, что оформление текста на главной странице соответствует ожидаемому")
     public void testMainPageFonts() {
         regularPriceColor = getAttributeValue("#box-campaigns .regular-price", "color");
-        regularPriceColorHex = Color.fromString(regularPriceColor).asHex();
-        assertEquals(regularPriceColorHex, "#777777");
+        String[] regularPriceColors = convertColorValueToStringArray(regularPriceColor);
+
+        assertEquals(regularPriceColors[0], regularPriceColors[1]);
+        assertEquals(regularPriceColors[1], regularPriceColors[2]);
 
         regularPriceDecor = getAttributeValue("#box-campaigns .regular-price", "text-decoration")
                 .substring(0, 12);
         assertEquals(regularPriceDecor, "line-through");
 
         salePriceColor = getAttributeValue("#box-campaigns .campaign-price", "color");
-        salePriceColorHex = Color.fromString(salePriceColor).asHex();
-        assertEquals(salePriceColorHex, "#cc0000");
+        String[] salePriceColors = convertColorValueToStringArray(salePriceColor);
+
+        assertEquals(salePriceColors[1], "0");
+        assertEquals(salePriceColors[2], "0");
 
         salePriceBoldValue = Integer.valueOf(getAttributeValue("#box-campaigns .campaign-price", "font-weight"));
         assertTrue(salePriceBoldValue > 600);
@@ -82,16 +87,20 @@ public class LitecartCustomersModeTest extends BaseTest {
         driver.findElement(By.cssSelector("#box-campaigns a")).click();
 
         regularPriceColor = getAttributeValue(".regular-price", "color");
-        regularPriceColorHex = Color.fromString(regularPriceColor).asHex();
-        assertEquals(regularPriceColorHex, "#666666");
+        String[] regularPriceColors = convertColorValueToStringArray(regularPriceColor);
+
+        assertEquals(regularPriceColors[0], regularPriceColors[1]);
+        assertEquals(regularPriceColors[1], regularPriceColors[2]);
 
         regularPriceDecor = getAttributeValue(".regular-price", "text-decoration")
                 .substring(0, 12);
         assertEquals(regularPriceDecor, "line-through");
 
         salePriceColor = getAttributeValue(".campaign-price", "color");
-        salePriceColorHex = Color.fromString(salePriceColor).asHex();
-        assertEquals(salePriceColorHex, "#cc0000");
+        String[] salePriceColors = convertColorValueToStringArray(salePriceColor);
+
+        assertEquals(salePriceColors[1], "0");
+        assertEquals(salePriceColors[2], "0");
 
         salePriceBoldValue = Integer.valueOf(getAttributeValue(".campaign-price", "font-weight"));
         assertTrue(salePriceBoldValue > 600);
@@ -99,5 +108,13 @@ public class LitecartCustomersModeTest extends BaseTest {
         regularPriceSize = getFontSize(".regular-price");
         salePriceSize = getFontSize(".campaign-price");
         assertTrue(regularPriceSize < salePriceSize);
+    }
+
+    @NotNull
+    private String[] convertColorValueToStringArray(String salePriceColor) {
+        return Color.fromString(salePriceColor).asRgb()
+                .replace("rgb(", "")
+                .replace(")", "")
+                .split(", ");
     }
 }
