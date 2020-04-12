@@ -39,7 +39,8 @@ public class AddingNewProductTest extends BaseTest {
         fillField("name[en]", "Kitty");
         fillField("code", numeric);
         driver.findElements(By.name("product_groups[]")).get(2).click();
-        driver.findElement(By.cssSelector("input[name='quantity']")).sendKeys("2,00");
+        driver.findElement(By.cssSelector("input[name='quantity']")).clear();
+        driver.findElement(By.cssSelector("input[name='quantity']")).sendKeys("2");
         driver.findElement(By.cssSelector("input[name='new_images[]']"))
                 .sendKeys(localFile.getAbsolutePath());
         fillFieldFromHome("date_valid_from", todayDate);
@@ -55,7 +56,8 @@ public class AddingNewProductTest extends BaseTest {
 
         // go to Prices tab
         driver.findElement(By.cssSelector("[href='#tab-prices']")).click();
-        fillFieldFromHome("purchase_price", "100,00");
+        driver.findElement(By.name("purchase_price")).clear();
+        fillFieldFromHome("purchase_price", "100");
         selectFromDropdown("[name='purchase_price_currency_code']", "US Dollars");
         fillField("prices[USD]", "110");
         fillField("prices[EUR]", "95");
