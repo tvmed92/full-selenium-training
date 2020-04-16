@@ -46,10 +46,6 @@ public class BaseTest {
     }
 
 
-    protected void clickCreateAccountButton() {
-        driver.findElement(By.name("create_account")).click();
-    }
-
     protected void loginAsUser(String email, String password) {
         fillField("email", email);
         fillField("password", password);
@@ -58,6 +54,10 @@ public class BaseTest {
 
     protected void userLogout() {
         driver.findElement(By.cssSelector("#box-account a[href='http://localhost/litecart/en/logout']")).click();
+    }
+
+    protected void clickCreateAccountButton() {
+        driver.findElement(By.name("create_account")).click();
     }
 
     protected void selectFromDropdown(String css, String value) {
@@ -83,8 +83,8 @@ public class BaseTest {
                 .getCssValue("font-size").replace("px", ""));
     }
 
-    protected String getAttributeValue(String css, String color) {
+    protected String getAttributeValue(String css, String value) {
         return driver.findElement(By.cssSelector(css))
-                .getCssValue(color);
+                .getCssValue(value);
     }
 }
