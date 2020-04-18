@@ -41,10 +41,13 @@ public class BaseTest {
         wait.until(WebDriver::getTitle).equals("My Store");
     }
 
+    protected void goToCountries() {
+        driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
+    }
+
     public void openMainPage() {
         driver.get("http://localhost/litecart/en/");
     }
-
 
     protected void loginAsUser(String email, String password) {
         fillField("email", email);
