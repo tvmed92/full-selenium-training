@@ -1,93 +1,70 @@
 package ru.stqa.litecart;
 
-import org.jetbrains.annotations.NotNull;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-
-import java.util.concurrent.TimeUnit;
-
-import static java.time.Duration.ofSeconds;
+import ru.stqa.litecart.app.ApplicationManager;
 
 public class BaseTest {
 
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    protected static ApplicationManager app;
+
+    static {
+        app = new ApplicationManager();
+    }
 
     @BeforeClass
-    public void webDriverUp() {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, ofSeconds(10));
+    public void setApp() {
+        app.init();
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
-        driver.quit();
-        driver = null;
-    }
-
-    public void loginAsAdmin() {
-        driver.get("http://localhost/litecart/admin/");
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("login")).click();
-        wait.until(WebDriver::getTitle).equals("My Store");
-    }
-
-    protected void goToCountries() {
-        driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
+        app.stop();
     }
 
     public void openMainPage() {
-        driver.get("http://localhost/litecart/en/");
+        app.getDriver().get("http://localhost/litecart/en/");
     }
 
-    protected void loginAsUser(String email, String password) {
-        fillField("email", email);
-        fillField("password", password);
-        driver.findElement(By.name("login")).click();
-    }
+//    protected void loginAsUser(String email, String password) {
+//        fillField("email", email);
+//        fillField("password", password);
+//        driver.findElement(By.name("login")).click();
+//    }
 
-    protected void userLogout() {
-        driver.findElement(By.cssSelector("#box-account a[href='http://localhost/litecart/en/logout']")).click();
-    }
+//    protected void userLogout() {
+//        driver.findElement(By.cssSelector("#box-account a[href='http://localhost/litecart/en/logout']")).click();
+//    }
 
-    protected void clickCreateAccountButton() {
-        driver.findElement(By.name("create_account")).click();
-    }
+//    protected void clickCreateAccountButton() {
+//        driver.findElement(By.name("create_account")).click();
+//    }
 
-    protected void selectFromDropdown(String css, String value) {
-        Select select = new Select(driver.findElement(By.cssSelector(css)));
-        select.selectByVisibleText(value);
-    }
+//    protected void selectFromDropdown(String css, String value) {
+//        Select select = new Select(driver.findElement(By.cssSelector(css)));
+//        select.selectByVisibleText(value);
+//    }
 
-    protected void fillField(String fieldName, String value) {
-        driver.findElement(By.name(fieldName)).sendKeys(value);
-    }
+//    protected void fillField(String fieldName, String value) {
+//        driver.findElement(By.name(fieldName)).sendKeys(value);
+//    }
 
-    protected void fillFieldFromHome(String fieldName, String value) {
-        driver.findElement(By.name(fieldName)).sendKeys(Keys.HOME + value);
-    }
+//    protected void fillFieldFromHome(String fieldName, String value) {
+//        driver.findElement(By.name(fieldName)).sendKeys(Keys.HOME + value);
+//    }
 
-    protected String getText(String s) {
-        return driver.findElement(By.cssSelector(s)).getText();
-    }
+//    protected String getText(String s) {
+//        return driver.findElement(By.cssSelector(s)).getText();
+//    }
 
-    @NotNull
-    protected Double getFontSize(String css) {
-        return Double.valueOf(driver.findElement(By.cssSelector(css))
-                .getCssValue("font-size").replace("px", ""));
-    }
+//    @NotNull
+//    protected Double getFontSize(String css) {
+//        return Double.valueOf(driver.findElement(By.cssSelector(css))
+//                .getCssValue("font-size").replace("px", ""));
+//    }
 
-    protected String getAttributeValue(String css, String value) {
-        return driver.findElement(By.cssSelector(css))
-                .getCssValue(value);
-    }
+//    protected String getAttributeValue(String css, String value) {
+//        return driver.findElement(By.cssSelector(css))
+//                .getCssValue(value);
+//    }
 }
